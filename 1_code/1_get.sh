@@ -44,6 +44,20 @@ egrep -e $pattern $TRGTfile > $rawdir/chr$chr.50mer.target
 wc -l $rawdir/chr$chr.50mer.target
 done
 
+for chr in X
+do
+pattern="^chr$chr:"
+egrep -e $pattern $TRGTfile > $rawdir/chr$chr.50mer.target
+wc -l $rawdir/chr$chr.50mer.target
+done
+
+for chr in Y
+do
+pattern="^chr$chr:"
+egrep -e $pattern $TRGTfile > $rawdir/chr$chr.50mer.target
+wc -l $rawdir/chr$chr.50mer.target
+done
+
 #############
 ## 2. Get protein coding gene annotations
 #############
@@ -58,12 +72,24 @@ cd $rawdir
 wget ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz 
 
 #Keep only protein coding gene entries:
-gzcat $rawdir/gencode.v19.annotation.gtf.gz | awk '{if($3=="gene" && $20=="\"protein_coding\";"){print $0}}' > $rawdir/gencode.protein_coding.genes.v19.gtf
+zcat $rawdir/gencode.v19.annotation.gtf.gz | awk '{if($3=="gene" && $20=="\"protein_coding\";"){print $0}}' > $rawdir/gencode.protein_coding.genes.v19.gtf
 
 ### TAKING CHR FROM GTF FILE
 for chr in {1..22}
 do
-pattern="^chr$chr\t"
+pattern="^chr$chr"
+egrep -e $pattern $rawdir/gencode.protein_coding.genes.v19.gtf | sort -n -k4 -k5 | cut -f1,4,5,9 > $rawdir/gencode.chr$chr.gore
+done
+
+for chr in X
+do
+pattern="^chr$chr"
+egrep -e $pattern $rawdir/gencode.protein_coding.genes.v19.gtf | sort -n -k4 -k5 | cut -f1,4,5,9 > $rawdir/gencode.chr$chr.gore
+done
+
+for chr in Y
+do
+pattern="^chr$chr"
 egrep -e $pattern $rawdir/gencode.protein_coding.genes.v19.gtf | sort -n -k4 -k5 | cut -f1,4,5,9 > $rawdir/gencode.chr$chr.gore
 done
 
@@ -74,17 +100,19 @@ done
 # Download full 1000 genomes individuals list
 wget ftp://ftp-trace.ncbi.nlm.nih.gov/1000genomes/ftp/release/20130502/integrated_call_samples_v3.20130502.ALL.panel
 
-
 # Make sure 1000 genomes sample list is in the raw data directory
 mv integrated_call_samples_v3.20130502.ALL.panel $rawdir/kg.integrated_call_samples_v3.20130502.ALL.panel
 
 # Cut the first column of data
 cut -f1 $rawdir/kg.integrated_call_samples_v3.20130502.ALL.panel > $rawdir/kg.inds
 
-# For each chromosome, download the 1000 genomes genotype file
-#for chr in {1..22}
-#do
-#pattern="^chr$chr\t"
+# add the sample(s) genotype file to the 3_raw directory 
+# it is not recommend to use the 1000 genomes geotype file as there may be issues with sites correctly being aligned to the Geuvidas samples 
+
+For each chromosome, download the 1000 genomes genotype file
+for chr in {1..22}
+do
+pattern="^chr$chr\t"
 wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20110521/ALL.chr13.phase1_release_v3.20101123.snps_indels_svs.genotypes.vcf.gz
 mv ALL.chr13.phase1_release_v3.20101123.snps_indels_svs.genotypes.vcf.gz $rawdir/kg.ALL.chr13.phase1_release_v3.20101123.snps_indels_svs.genotypes.vcf.gz
 done
