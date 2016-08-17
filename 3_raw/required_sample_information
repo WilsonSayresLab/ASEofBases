@@ -1,0 +1,5 @@
+# Where your raw sample information should be stored
+# including:
+#     reference genome in fasta format
+#     reference gene annotation file in either gft or gff format
+#     samples that have already been aligned and filtered for quality in bam format
