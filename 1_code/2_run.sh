@@ -8,9 +8,9 @@
 #############
 
 #define directories
-progdir=/home/user/ASEofBases/2_prog
-rawdir=/home/user/ASEofBases/3_raw
-outdir=/home/user/ASEofBases/4_data
+progdir=~/ASEofBases-master/2_prog
+rawdir=~/ASEofBases-master/3_raw
+outdir=~/ASEofBases-master/4_data
 
 #define input filtering files
 INFOfile=$rawdir/geuvadis.E-GEUV-1.sdrf.txt
@@ -20,7 +20,7 @@ TRGTfile=$rawdir/wgEncodeCrgMapabilityAlign50mer.target
 pop=CEU #pop= population, Central European Utah
 
 #define program
-MAKEDATA=/home/user/ASEofBases/1_code/3_makeData.sh
+MAKEDATA=~/ASEofBases-master/1_code/3_makeData.sh
 
 
 #load modules needed for this analysis
