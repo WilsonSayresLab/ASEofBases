@@ -24,7 +24,7 @@ MAKEDATA=~/ASEofBases-master/1_code/3_makeData.sh
 
 
 #load modules needed for this analysis
-angsd=$progdir/angsd/0.563
+angsd=$progdir/angsd/angsd
 vcftools=$progdir/vcftools_0.1.12b/bin/vcftools
 
 #for each autosome
