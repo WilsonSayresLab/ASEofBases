@@ -36,7 +36,10 @@ You will also need the following perviosuly published programs installed:
 - zlib-1.2.8				http://www.zlib.net	
 - samtools/htslib			https://github.com/samtools/htslib
 - bigwig				https://genome.ucsc.edu/goldenPath/help/bigWig.html
-
+- bcftools				https://samtools.github.io/bcftools/
+- bwa 					http://bio-bwa.sourceforge.net/bwa.shtml
+- GATK GenomeAnalysisTK.jar 		https://software.broadinstitute.org/gatk/documentation/quickstart
+- snpEff				http://snpeff.sourceforge.net/download.html
 
 #### Directory overview of ASEofBases:
 
@@ -51,6 +54,7 @@ You will also need the following perviosuly published programs installed:
 - getliners
 - ieatgor
 - VCFmergeGTF3
+- perviosuly published programs which will be installed. See Step 2 program check for more information. 
  
 /ASEofBases/3_raw/	# raw and parsed data
 - target mapability files
@@ -90,31 +94,57 @@ Make sure each of these programs are installed and added to the /ASEofBases/2_pr
 - samtools/htslib (https://github.com/samtools/htslib)
 
 
-		# angsd
+		# angsd and samtools
 		Using a local folder containing htslib
 		git clone https://github.com/samtools/htslib.git;
 		git clone https://github.com/angsd/angsd.git;
 		cd htslib;make;cd ../angsd;make HTSSRC=../htslib
+		cd ..
 		
 		Systemwide installation of htslib
 		git clone https://github.com/angsd/angsd.git;
 		cd angsd;make
+		cd ..
 		
+		# Bcftools by samtools
+		git clone --branch=develop git://github.com/samtools/htslib.git
+		git clone --branch=develop git://github.com/samtools/bcftools.git
+		git clone --branch=develop git://github.com/samtools/samtools.git
+		cd bcftools; make
+		cd ../samtools; make
+		cd ..
+		
+		# bwa 
+		wget https://sourceforge.net/projects/bio-bwa/files/bwa-0.7.15.tar.bz2
+		tar -vxjf bwa-0.7.15.tar.bz2
+		cd bwa-0.7.15
+		make
+		cd ..
+		
+		# Picard tools 
+		wget https://github.com/broadinstitute/picard/archive/master.zip
+		unzip master.zip 
+		cd picard-master/
+		./gradlew jar
+		./gradlew clean
+		cd ..
+		
+		# snpEff
+		wget http://sourceforge.net/projects/snpeff/files/snpEff_latest_core.zip
+		unzip snpEff_latest_core.zip
 		
 		# vcftoolss_0.1.12b
 		wget https://sourceforge.net/projects/vcftools/files/vcftools_0.1.12b.tar.gz
 		tar -xzvf vcftools_0.1.12b.tar.gz
+		cd  vcftools_0.1.12b
+		make
+		cd ..
 		rm vcftools_0.1.12b.tar.gz
 		
 		# zlib
 		wget http://zlib.net/zlib-1.2.8.tar.gz
 		tar -xzvf zlib-1.2.8.tar.gz
 		rm zlib-1.2.8.tar.gz
-		
-		# samtools 
-		wget https://github.com/samtools/samtools/releases/download/1.3/samtools-1.3.tar.bz2 
-		tar -vxjf samtools-1.3.tar.bz2
-		rm samtools-1.3.tar.bz2
 		
 		#BigWig
 		mkdir BigWig
