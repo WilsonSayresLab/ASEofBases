@@ -46,7 +46,8 @@ BAMSfile=$rawdir/geuvadis.bamlist
 #online location of Geuvadis data
 location=http://www.ebi.ac.uk/arrayexpress/files/E-GEUV-1/
 
-#merge VCF and GTF files for each individual
+# merge VCF and GTF files for each individual
+# note that VCFmergeGTF will only work on a phased VCF file, as it is. 
 echo $ind > $outdir/tmp.ind
 $VCFmergeGTF $rawdir/gencode.chr$chr.gore $rawdir/kg.chr$chr.$pop.mac2.recode.vcf $outdir/tmp.ind $outdir/tmp.merged.gz
 
